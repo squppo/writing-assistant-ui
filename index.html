@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Academic Writing Assistant Hub</title>
 
-    <!-- PAGE STYLES -->
     <style>
         body {
             margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* full viewport height */
             font-family: Arial, sans-serif;
             background: #f7f9fc;
         }
@@ -20,11 +22,14 @@
             text-align: center;
             font-size: 28px;
             font-weight: bold;
+            flex-shrink: 0; /* header never shrinks */
         }
 
+        /* Main layout now fills remaining space */
         #container {
-            display: flex;
-            height: calc(100vh - 80px);
+            flex: 1;                      /* take remaining height */
+            display: flex;                /* horizontal layout */
+            min-height: 0;                /* IMPORTANT: prevents overflow issues */
         }
 
         /* Sidebar */
@@ -33,6 +38,7 @@
             background: #ffffff;
             border-right: 2px solid #e5e7eb;
             padding: 20px;
+            overflow-y: auto;
         }
 
         #sidebar h2 {
@@ -64,14 +70,18 @@
             flex: 1;
             background: white;
             position: relative;
+            overflow: hidden; /* prevent scrollbars around Flowise */
+            min-width: 0;     /* prevents flexbox from forcing size */
         }
 
+        /* Flowise embed frame */
         #chatframe {
             width: 100%;
             height: 100%;
-            overflow: hidden;
+            overflow: auto; /* allow scrolling inside chat */
         }
     </style>
+
 </head>
 
 <body>
@@ -104,7 +114,7 @@
         </button>
     </div>
 
-    <!-- CHATBOT DISPLAY SECTION -->
+    <!-- CHATBOT AREA -->
     <div id="chatframe-container">
         <div id="chatframe">
             <p style="text-align:center; padding-top: 40px; color:#777;">
