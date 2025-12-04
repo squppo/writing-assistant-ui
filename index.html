@@ -5,71 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Academic Writing Assistant Hub</title>
 
-    <!-- PAGE STYLES -->
+    <!-- Google Font for cleaner UI -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f7f9fc;
+            font-family: "Inter", sans-serif;
+            background: #f4f6fb;
+            color: #1e2a3a;
         }
 
+        /* Top Navigation Bar */
         header {
             background: #1e3a8a;
-            padding: 20px;
+            padding: 18px 30px;
             color: white;
-            text-align: center;
-            font-size: 28px;
-            font-weight: bold;
+            font-size: 26px;
+            font-weight: 600;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
         }
 
-        #container {
+        /* Layout Wrapper */
+        #layout {
             display: flex;
-            height: calc(100vh - 80px);
+            height: calc(100vh - 72px);
         }
 
         /* Sidebar */
         #sidebar {
-            width: 280px;
+            width: 320px;
             background: #ffffff;
-            border-right: 2px solid #e5e7eb;
-            padding: 20px;
+            border-right: 1px solid #e1e5ee;
+            padding: 25px;
+            box-shadow: 3px 0 6px rgba(0,0,0,0.05);
+            overflow-y: auto;
         }
 
         #sidebar h2 {
-            margin-top: 0;
             font-size: 20px;
+            margin-bottom: 15px;
+            font-weight: 600;
             color: #1e3a8a;
         }
 
-        .assistant-button {
-            width: 100%;
-            background: #1e3a8a;
-            color: white;
-            padding: 12px;
-            margin: 8px 0;
-            border: none;
-            font-size: 16px;
+        /* Assistant Button */
+        .assistant-card {
+            background: #f9fafc;
+            border: 1px solid #e2e8f0;
+            padding: 14px;
+            border-radius: 10px;
+            margin-bottom: 12px;
             cursor: pointer;
-            border-radius: 6px;
-            transition: 0.2s;
-            text-align: left;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .assistant-button:hover {
-            background: #3b57c4;
+        .assistant-card:hover {
+            background: #eef2ff;
+            border-color: #c3d1ff;
+            transform: translateX(4px);
         }
 
-        /* Chat window container */
-        #chatframe-container {
-            flex: 1;
+        .assistant-icon {
+            font-size: 22px;
+        }
+
+        .assistant-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .assistant-title {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .assistant-desc {
+            font-size: 13px;
+            opacity: 0.75;
+        }
+
+        /* Main Chat Panel */
+        #chat-panel {
+            flex-grow: 1;
             background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: relative;
         }
 
-        #chatframe {
+        #chat-container {
             width: 100%;
             height: 100%;
-            overflow: hidden;
+        }
+
+        /* Fade-in animation */
+        .fade {
+            animation: fadeIn 0.35s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Layout */
+        @media screen and (max-width: 800px) {
+            #layout { flex-direction: column; }
+            #sidebar { width: 100%; height: auto; border-right: none; }
+            #chat-panel { height: calc(100vh - 72px - 300px); }
         }
     </style>
 </head>
@@ -78,68 +126,94 @@
 
 <header>Academic Writing Assistant Hub</header>
 
-<div id="container">
+<div id="layout">
+
     <!-- SIDEBAR -->
     <div id="sidebar">
-        <h2>Select a Writing Assistant:</h2>
+        <h2>Choose Your Assistant</h2>
 
-        <button class="assistant-button"
-            onclick="loadAssistant('057b9b96-b93f-42ac-b91d-6b562b908d8b')">
-            🧩 Structure Architect
-        </button>
+        <!-- Structure Architect -->
+        <div class="assistant-card" onclick="loadAssistant('057b9b96-b93f-42ac-b91d-6b562b908d8b')">
+            <div class="assistant-icon">🧩</div>
+            <div class="assistant-info">
+                <div class="assistant-title">Structure Architect</div>
+                <div class="assistant-desc">Fix structure, enforce red thread, clarify logic.</div>
+            </div>
+        </div>
 
-        <button class="assistant-button"
-            onclick="loadAssistant('YOUR_STYLE_POLICE_ID')">
-            ✍️ Style Police
-        </button>
+        <!-- Style Police -->
+        <div class="assistant-card" onclick="loadAssistant('YOUR_STYLE_POLICE_ID')">
+            <div class="assistant-icon">✍️</div>
+            <div class="assistant-info">
+                <div class="assistant-title">Style Police</div>
+                <div class="assistant-desc">Improve academic tone and clarity.</div>
+            </div>
+        </div>
 
-        <button class="assistant-button"
-            onclick="loadAssistant('YOUR_KICKSTART_COACH_ID')">
-            ⚡ Kickstart Coach
-        </button>
+        <!-- Kickstart Coach -->
+        <div class="assistant-card" onclick="loadAssistant('YOUR_KICKSTART_ID')">
+            <div class="assistant-icon">⚡</div>
+            <div class="assistant-info">
+                <div class="assistant-title">Kickstart Coach</div>
+                <div class="assistant-desc">Break writing blocks into manageable steps.</div>
+            </div>
+        </div>
 
-        <button class="assistant-button"
-            onclick="loadAssistant('YOUR_PARAPHRASING_ID')">
-            🔁 Paraphrasing Trainer
-        </button>
+        <!-- Paraphrasing Trainer -->
+        <div class="assistant-card" onclick="loadAssistant('YOUR_PARAPHRASING_ID')">
+            <div class="assistant-icon">🔁</div>
+            <div class="assistant-info">
+                <div class="assistant-title">Paraphrasing Trainer</div>
+                <div class="assistant-desc">Learn to paraphrase correctly without plagiarism.</div>
+            </div>
+        </div>
 
-        <button class="assistant-button"
-            onclick="loadAssistant('YOUR_LOGIC_ENFORCER_ID')">
-            🔗 Logic Enforcer
-        </button>
+        <!-- Logic Enforcer -->
+        <div class="assistant-card" onclick="loadAssistant('YOUR_LOGIC_ID')">
+            <div class="assistant-icon">🔗</div>
+            <div class="assistant-info">
+                <div class="assistant-title">Logic Enforcer</div>
+                <div class="assistant-desc">Connect arguments and improve coherence.</div>
+            </div>
+        </div>
 
-        <button class="assistant-button"
-            onclick="loadAssistant('YOUR_DIAGNOSTIC_ID')">
-            ❓ I Don't Know What I Need
-        </button>
+        <!-- Diagnostic Assistant -->
+        <div class="assistant-card" onclick="loadAssistant('YOUR_DIAGNOSTIC_ID')">
+            <div class="assistant-icon">❓</div>
+            <div class="assistant-info">
+                <div class="assistant-title">I Don’t Know What I Need</div>
+                <div class="assistant-desc">Identify your writing problem and route you.</div>
+            </div>
+        </div>
+
     </div>
 
-    <!-- CHATBOT DISPLAY SECTION -->
-    <div id="chatframe-container">
-        <div id="chatframe">
-            <p style="text-align:center; padding-top: 40px; color:#777;">
-                👈 Select an assistant from the left menu to begin.
+    <!-- CHAT PANEL -->
+    <div id="chat-panel">
+        <div id="chat-container">
+            <p style="color:#6a7180; text-align:center; font-size:16px;">
+                👈 Select an assistant to begin.
             </p>
         </div>
     </div>
 </div>
 
-<!-- CHATBOT LOADER SCRIPT -->
+<!-- FLOWISE CHATBOT SCRIPT -->
 <script type="module">
-    import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
+    import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
 
-    window.loadAssistant = function (chatflowId) {
-        const container = document.getElementById("chatframe");
+    window.loadAssistant = function(chatflowId) {
+        const container = document.getElementById("chat-container");
 
         container.innerHTML = `
-            <flowise-fullchatbot></flowise-fullchatbot>
+            <flowise-fullchatbot class="fade"></flowise-fullchatbot>
         `;
 
         Chatbot.initFull({
             chatflowid: chatflowId,
-            apiHost: "https://flowiseweb-kf7q.onrender.com",
+            apiHost: "https://flowiseweb-kf7q.onrender.com"
         });
-    }
+    };
 </script>
 
 </body>
