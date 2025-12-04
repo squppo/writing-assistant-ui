@@ -1,219 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Academic Writing Assistant Hub</title>
-
-    <!-- Google Font for cleaner UI -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Assistant</title>
 
     <style>
         body {
             margin: 0;
             font-family: "Inter", sans-serif;
-            background: #f4f6fb;
-            color: #1e2a3a;
-        }
-
-        /* Top Navigation Bar */
-        header {
-            background: #1e3a8a;
-            padding: 18px 30px;
-            color: white;
-            font-size: 26px;
-            font-weight: 600;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-        }
-
-        /* Layout Wrapper */
-        #layout {
-            display: flex;
-            height: calc(100vh - 72px);
-        }
-
-        /* Sidebar */
-        #sidebar {
-            width: 320px;
-            background: #ffffff;
-            border-right: 1px solid #e1e5ee;
-            padding: 25px;
-            box-shadow: 3px 0 6px rgba(0,0,0,0.05);
-            overflow-y: auto;
-        }
-
-        #sidebar h2 {
-            font-size: 20px;
-            margin-bottom: 15px;
-            font-weight: 600;
-            color: #1e3a8a;
-        }
-
-        /* Assistant Button */
-        .assistant-card {
-            background: #f9fafc;
-            border: 1px solid #e2e8f0;
-            padding: 14px;
-            border-radius: 10px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .assistant-card:hover {
-            background: #eef2ff;
-            border-color: #c3d1ff;
-            transform: translateX(4px);
-        }
-
-        .assistant-icon {
-            font-size: 22px;
-        }
-
-        .assistant-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .assistant-title {
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-        .assistant-desc {
-            font-size: 13px;
-            opacity: 0.75;
-        }
-
-        /* Main Chat Panel */
-        #chat-panel {
-            flex-grow: 1;
             background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
         }
-
-        #chat-container {
-            width: 100%;
-            height: 100%;
+        #chat-wrapper {
+            width: 100vw;
+            height: 100vh;
         }
-
-        /* Fade-in animation */
         .fade {
             animation: fadeIn 0.35s ease-out;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Mobile Layout */
-        @media screen and (max-width: 800px) {
-            #layout { flex-direction: column; }
-            #sidebar { width: 100%; height: auto; border-right: none; }
-            #chat-panel { height: calc(100vh - 72px - 300px); }
         }
     </style>
 </head>
 
 <body>
+<div id="chat-wrapper"></div>
 
-<header>Academic Writing Assistant Hub</header>
-
-<div id="layout">
-
-    <!-- SIDEBAR -->
-    <div id="sidebar">
-        <h2>Choose Your Assistant</h2>
-
-        <!-- Structure Architect -->
-        <div class="assistant-card" onclick="loadAssistant('057b9b96-b93f-42ac-b91d-6b562b908d8b')">
-            <div class="assistant-icon">🧩</div>
-            <div class="assistant-info">
-                <div class="assistant-title">Structure Architect</div>
-                <div class="assistant-desc">Fix structure, enforce red thread, clarify logic.</div>
-            </div>
-        </div>
-
-        <!-- Style Police -->
-        <div class="assistant-card" onclick="loadAssistant('YOUR_STYLE_POLICE_ID')">
-            <div class="assistant-icon">✍️</div>
-            <div class="assistant-info">
-                <div class="assistant-title">Style Police</div>
-                <div class="assistant-desc">Improve academic tone and clarity.</div>
-            </div>
-        </div>
-
-        <!-- Kickstart Coach -->
-        <div class="assistant-card" onclick="loadAssistant('YOUR_KICKSTART_ID')">
-            <div class="assistant-icon">⚡</div>
-            <div class="assistant-info">
-                <div class="assistant-title">Kickstart Coach</div>
-                <div class="assistant-desc">Break writing blocks into manageable steps.</div>
-            </div>
-        </div>
-
-        <!-- Paraphrasing Trainer -->
-        <div class="assistant-card" onclick="loadAssistant('YOUR_PARAPHRASING_ID')">
-            <div class="assistant-icon">🔁</div>
-            <div class="assistant-info">
-                <div class="assistant-title">Paraphrasing Trainer</div>
-                <div class="assistant-desc">Learn to paraphrase correctly without plagiarism.</div>
-            </div>
-        </div>
-
-        <!-- Logic Enforcer -->
-        <div class="assistant-card" onclick="loadAssistant('YOUR_LOGIC_ID')">
-            <div class="assistant-icon">🔗</div>
-            <div class="assistant-info">
-                <div class="assistant-title">Logic Enforcer</div>
-                <div class="assistant-desc">Connect arguments and improve coherence.</div>
-            </div>
-        </div>
-
-        <!-- Diagnostic Assistant -->
-        <div class="assistant-card" onclick="loadAssistant('YOUR_DIAGNOSTIC_ID')">
-            <div class="assistant-icon">❓</div>
-            <div class="assistant-info">
-                <div class="assistant-title">I Don’t Know What I Need</div>
-                <div class="assistant-desc">Identify your writing problem and route you.</div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- CHAT PANEL -->
-    <div id="chat-panel">
-        <div id="chat-container">
-            <p style="color:#6a7180; text-align:center; font-size:16px;">
-                👈 Select an assistant to begin.
-            </p>
-        </div>
-    </div>
-</div>
-
-<!-- FLOWISE CHATBOT SCRIPT -->
 <script type="module">
     import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
 
-    window.loadAssistant = function(chatflowId) {
-        const container = document.getElementById("chat-container");
+    // Read chatflow ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const chatflowId = urlParams.get("flow");
 
-        container.innerHTML = `
-            <flowise-fullchatbot class="fade"></flowise-fullchatbot>
-        `;
+    document.getElementById("chat-wrapper").innerHTML = `<flowise-fullchatbot class="fade"></flowise-fullchatbot>`;
 
-        Chatbot.initFull({
-            chatflowid: chatflowId,
-            apiHost: "https://flowiseweb-kf7q.onrender.com"
-        });
-    };
+    Chatbot.initFull({
+        chatflowid: chatflowId,
+        apiHost: "https://flowiseweb-kf7q.onrender.com"
+    });
 </script>
 
 </body>
