@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Academic Writing Assistant Hub</title>
+
+    <!-- PAGE STYLES -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f9fc;
+        }
+
+        header {
+            background: #1e3a8a;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        #container {
+            display: flex;
+            height: calc(100vh - 80px);
+        }
+
+        /* Sidebar */
+        #sidebar {
+            width: 280px;
+            background: #ffffff;
+            border-right: 2px solid #e5e7eb;
+            padding: 20px;
+        }
+
+        #sidebar h2 {
+            margin-top: 0;
+            font-size: 20px;
+            color: #1e3a8a;
+        }
+
+        .assistant-button {
+            width: 100%;
+            background: #1e3a8a;
+            color: white;
+            padding: 12px;
+            margin: 8px 0;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: 0.2s;
+            text-align: left;
+        }
+
+        .assistant-button:hover {
+            background: #3b57c4;
+        }
+
+        /* Chat window container */
+        #chatframe-container {
+            flex: 1;
+            background: white;
+            position: relative;
+        }
+
+        #chatframe {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>Academic Writing Assistant Hub</header>
+
+<div id="container">
+    <!-- SIDEBAR -->
+    <div id="sidebar">
+        <h2>Select a Writing Assistant:</h2>
+
+        <button class="assistant-button"
+            onclick="loadAssistant('057b9b96-b93f-42ac-b91d-6b562b908d8b')">
+            🧩 Structure Architect
+        </button>
+
+        <button class="assistant-button"
+            onclick="loadAssistant('YOUR_STYLE_POLICE_ID')">
+            ✍️ Style Police
+        </button>
+
+        <button class="assistant-button"
+            onclick="loadAssistant('YOUR_KICKSTART_COACH_ID')">
+            ⚡ Kickstart Coach
+        </button>
+
+        <button class="assistant-button"
+            onclick="loadAssistant('YOUR_PARAPHRASING_ID')">
+            🔁 Paraphrasing Trainer
+        </button>
+
+        <button class="assistant-button"
+            onclick="loadAssistant('YOUR_LOGIC_ENFORCER_ID')">
+            🔗 Logic Enforcer
+        </button>
+
+        <button class="assistant-button"
+            onclick="loadAssistant('YOUR_DIAGNOSTIC_ID')">
+            ❓ I Don't Know What I Need
+        </button>
+    </div>
+
+    <!-- CHATBOT DISPLAY SECTION -->
+    <div id="chatframe-container">
+        <div id="chatframe">
+            <p style="text-align:center; padding-top: 40px; color:#777;">
+                👈 Select an assistant from the left menu to begin.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- CHATBOT LOADER SCRIPT -->
+<script type="module">
+    import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
+
+    window.loadAssistant = function (chatflowId) {
+        const container = document.getElementById("chatframe");
+
+        container.innerHTML = `
+            <flowise-fullchatbot></flowise-fullchatbot>
+        `;
+
+        Chatbot.initFull({
+            chatflowid: chatflowId,
+            apiHost: "https://flowiseweb-kf7q.onrender.com",
+        });
+    }
+</script>
+
+</body>
+</html>
