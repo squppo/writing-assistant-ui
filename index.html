@@ -25,11 +25,10 @@
             flex-shrink: 0; /* header never shrinks */
         }
 
-        /* Main layout now fills remaining space */
         #container {
-            flex: 1;                      /* take remaining height */
-            display: flex;                /* horizontal layout */
-            min-height: 0;                /* IMPORTANT: prevents overflow issues */
+            flex: 1;
+            display: flex;
+            min-height: 0; /* required to avoid overflow clipping */
         }
 
         /* Sidebar */
@@ -65,20 +64,22 @@
             background: #3b57c4;
         }
 
-        /* Chat window container */
+        /* Chat area with fixed viewport height (Option A) */
         #chatframe-container {
             flex: 1;
             background: white;
-            position: relative;
-            overflow: hidden; /* prevent scrollbars around Flowise */
-            min-width: 0;     /* prevents flexbox from forcing size */
+            height: calc(100vh - 80px); /* ensure full Flowise visibility */
+            overflow: hidden;
+            display: flex;
+            align-items: center;   /* center placeholder vertically */
+            justify-content: center;
         }
 
-        /* Flowise embed frame */
+        /* Chat embed frame */
         #chatframe {
             width: 100%;
             height: 100%;
-            overflow: auto; /* allow scrolling inside chat */
+            overflow: auto; /* required for Flowise internal scrolling */
         }
     </style>
 
@@ -89,6 +90,7 @@
 <header>Academic Writing Assistant Hub</header>
 
 <div id="container">
+
     <!-- SIDEBAR -->
     <div id="sidebar">
         <h2>Select a Writing Assistant:</h2>
@@ -114,26 +116,30 @@
         </button>
     </div>
 
-    <!-- CHATBOT AREA -->
+    <!-- CHAT AREA -->
     <div id="chatframe-container">
         <div id="chatframe">
-            <p style="text-align:center; padding-top: 40px; color:#777;">
+            <p style="text-align:center; color:#777; font-size:18px;">
                 👈 Select an assistant from the left menu to begin.
             </p>
         </div>
     </div>
+
 </div>
 
-<!-- CHATBOT LOADER SCRIPT -->
+<!-- FLOWISE EMBED SCRIPT -->
 <script type="module">
     import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
 
     window.loadAssistant = function (chatflowId) {
-        const container = document.getElementById("chatframe");
+        const container = document.getElementById("chatframe-container");
+        const frame = document.getElementById("chatframe");
 
-        container.innerHTML = `
-            <flowise-fullchatbot></flowise-fullchatbot>
-        `;
+        // Restore normal behavior (Flowise is bottom-aligned internally)
+        container.style.alignItems = "stretch";
+        container.style.justifyContent = "flex-start";
+
+        frame.innerHTML = `<flowise-fullchatbot></flowise-fullchatbot>`;
 
         Chatbot.initFull({
             chatflowid: chatflowId,
