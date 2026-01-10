@@ -102,8 +102,3 @@ Since this is a static site, you do not need to install `node_modules` or run a 
 * **Teach, Don't Cheats:** Foster long-term writing skills through scaffolding and questioning.
 
 ---
-
-**License**
-[MIT](LICENSE)
-
-```
